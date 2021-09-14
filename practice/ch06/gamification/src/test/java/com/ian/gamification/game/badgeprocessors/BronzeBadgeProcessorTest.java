@@ -1,0 +1,31 @@
+package com.ian.gamification.game.badgeprocessors;
+
+import com.ian.gamification.game.domain.BadgeType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class BronzeBadgeProcessorTest {
+    private BronzeBadgeProcessor badgeProcessor;
+
+    @BeforeEach
+    public void setUp() {
+        badgeProcessor = new BronzeBadgeProcessor();
+    }
+
+    @Test
+    public void should_give_badge_if_score_over_threshold() {
+        Optional<BadgeType> badgeType = badgeProcessor.processForOptionalBadge(60, List.of(), null);
+        assertThat(badgeType).contains(BadgeType.BRONZE);
+    }
+
+    @Test
+    public void should_not_give_badge_if_score_under_threshold() {
+        Optional<BadgeType> badgeType = badgeProcessor.processForOptionalBadge(40, List.of(), null);
+        assertThat(badgeType).isEmpty();
+    }
+}
